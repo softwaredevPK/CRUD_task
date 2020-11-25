@@ -39,13 +39,17 @@ def add_employee(employee: Employee):
 # Put methods - update record
 
 
-@app.put('/employees')
+@app.put('/employees/')
 def update_employee(employee: Employee):
     pass
 
 
 
+# Delete methods
 
+@app.delete('/employees/{employee_id}')
+def delete_employees(employee_id: int):
+    pass
 
 
 
