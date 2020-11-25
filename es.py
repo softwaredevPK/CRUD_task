@@ -1,23 +1,52 @@
 from elasticsearch import Elasticsearch
+from elasticsearch.exceptions import NotFoundError
+from constants import *
 
 es = Elasticsearch(HOST="http://localhost", PORT=9200)
 
 
 def add_employee_es(id, employee_json):
-    es.index(index='megacorp', doc_type='employee', id=id, body=employee_json)
+    print(employee_json)
+    try:
+        es.index(index=MEGACORP, doc_type=EMPLOYEE, id=id, body=employee_json)
+    except NotFoundError:
+        return False
+    else:
+        return True
 
 
 def get_employee_es(id):
-    result = es.get(index='megacorp', doc_type='employee', id=id)
-    return result['_source']
+    try:
+        result = es.get(index=MEGACORP, doc_type=EMPLOYEE, id=id)
+    except NotFoundError:
+        return None
+    else:
+        return result[SOURCE]
 
 
 def delete_employee_es(id):
-    es.delete(index='megacorp', doc_type='employee', id=id)
+    try:
+        es.delete(index=MEGACORP, doc_type=EMPLOYEE, id=id)
+    except NotFoundError:
+        return False
+    else:
+        return True
 
 
 def update_employee_es(id, employee_json):
-    if employee_json.get['doc'] is None:
-        employee_json = {"doc": employee_json}
-    es.update(index='megacorp', doc_type='employee', id=id, body=employee_json)
+    if employee_json.get(DOC) is None:
+        employee_json = {DOC: employee_json}
+    try:
+        es.update(index=MEGACORP, doc_type=EMPLOYEE, id=id, body=employee_json)
+    except NotFoundError:
+        return False
+    else:
+        return True
 
+
+def get_all_employees_es():
+    result_list = []
+    results = es.search(index=MEGACORP)[HITS][HITS]
+    for index in range(len(results)):
+        result_list.append(results[index][SOURCE])
+    return result_list
