@@ -6,10 +6,13 @@ es = Elasticsearch(HOST="http://localhost", PORT=9200)
 
 
 def add_employee_es(id, employee_json):
-    print(employee_json)
+    # check if such employee exists
+    if get_employee_es(id) is not None:
+        return False
+    # Add data
     try:
         es.index(index=MEGACORP, doc_type=EMPLOYEE, id=id, body=employee_json)
-    except NotFoundError:
+    except:
         return False
     else:
         return True
@@ -34,6 +37,7 @@ def delete_employee_es(id):
 
 
 def update_employee_es(id, employee_json):
+    # check if json contains 'DOC'
     if employee_json.get(DOC) is None:
         employee_json = {DOC: employee_json}
     try:

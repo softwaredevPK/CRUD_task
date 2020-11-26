@@ -51,22 +51,27 @@ def add_employee(employee: Employee):
         return 'Failure'
 
 
-
 # Put methods - update record
 
 
 @app.put('/employees/')
 def update_employee(employee: Employee):
-    pass
-
+    result = update_employee_es(employee.id, employee.to_json())
+    if result:
+        return 'Success'
+    else:
+        return 'Failure'
 
 
 # Delete methods
 
 @app.delete('/employees/{employee_id}')
 def delete_employees(employee_id: int):
-    pass
-
+    result = delete_employee_es(employee_id)
+    if result:
+        return 'Success'
+    else:
+        return 'Failure'
 
 
 
