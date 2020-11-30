@@ -1,0 +1,5 @@
+elasticsearch
+fastapi
+requests
+uvicorn
+

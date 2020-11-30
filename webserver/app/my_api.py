@@ -2,7 +2,6 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from html_responds import return_employee_html
 from es import add_employee_es, get_employee_es, update_employee_es, delete_employee_es, get_all_employees_es
-from constants import *
 
 app = FastAPI()
 

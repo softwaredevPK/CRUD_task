@@ -1,0 +1,23 @@
+version: "3"
+services:
+  es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
+    container_name: es
+    environment:
+      - discovery.type=single-node
+    ports:
+      - 9200:9200
+    volumes:
+      - esdata1:/usr/share/elasticsearch/data
+  web:
+    build: webserver
+    container_name: app
+    depends_on:
+      - es
+    ports:
+      - 8000:8000
+    volumes:
+      - ./webserver/app:/var/www/app
+volumes:
+    esdata1:
+      driver: local
