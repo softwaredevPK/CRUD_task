@@ -1,7 +1,7 @@
 CRUD Task
 ===
 
-This is a project built for recruitment purposes. It's goal is to build an app based on FastApi, 
+This is a project built for recruitment purposes. Its goal is to build an app based on FastApi, 
 with ElasticSearch as Database, and put them into separate containers with Docker.
 
 #### Docker
